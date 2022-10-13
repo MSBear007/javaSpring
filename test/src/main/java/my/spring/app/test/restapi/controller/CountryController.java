@@ -1,5 +1,7 @@
 package my.spring.app.test.restapi.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,5 +31,10 @@ public class CountryController {
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Country> getAll(@RequestParam(value = "code", defaultValue = "007")String code) {
         return countryRepository.findAll();
+    }
+
+    @GetMapping(path="/")
+    public @ResponseBody Optional<Country> getOne(@RequestParam(value="name")String name) {
+        return countryRepository.findByName(name);
     }
 }
