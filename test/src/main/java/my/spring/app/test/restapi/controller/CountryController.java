@@ -14,7 +14,7 @@ import my.spring.app.test.restapi.model.Country;
 import my.spring.app.test.restapi.repositories.CountryRepository;
 
 @RestController
-@RequestMapping(path = "/country")
+@RequestMapping(path = "/${v1Api}/country")
 public class CountryController {
 
     @Autowired
