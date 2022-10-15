@@ -11,7 +11,7 @@ import my.spring.app.test.dto.UserDto;
 import my.spring.app.test.exceptions.PasswordsDoNotMatchException;
 import my.spring.app.test.exceptions.UserAlreadyExistsException;
 import my.spring.app.test.restapi.model.User;
-import my.spring.app.test.service.RegistrationService;
+import my.spring.app.test.restapi.service.RegistrationService;
 
 @RestController
 @RequestMapping("/reg")

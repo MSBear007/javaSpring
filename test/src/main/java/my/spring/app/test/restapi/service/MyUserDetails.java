@@ -1,15 +1,19 @@
-package my.spring.app.test.service;
+package my.spring.app.test.restapi.service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import my.spring.app.test.restapi.model.User;
 
 public class MyUserDetails implements UserDetails {
-    private User user;
 
+    private User user;
+    
     public MyUserDetails(User user) {
         this.user = user;
     }
@@ -26,8 +30,11 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO 
-        return null;
+        List<GrantedAuthority> authorities = user.getRoles()
+            .stream()
+            .map(role -> new SimpleGrantedAuthority(role.getName()))
+            .collect(Collectors.toList());
+            return authorities;
     }
 
     @Override

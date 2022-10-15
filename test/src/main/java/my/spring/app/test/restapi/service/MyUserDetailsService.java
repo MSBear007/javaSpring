@@ -1,4 +1,4 @@
-package my.spring.app.test.service;
+package my.spring.app.test.restapi.service;
 
 import java.util.Optional;
 

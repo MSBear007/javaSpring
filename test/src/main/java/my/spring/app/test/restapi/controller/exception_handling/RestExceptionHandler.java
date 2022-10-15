@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import my.spring.app.test.exceptions.PasswordsDoNotMatchException;
+import my.spring.app.test.exceptions.ResourceNotFoundException;
 import my.spring.app.test.exceptions.UserAlreadyExistsException;
 
 @RestControllerAdvice
@@ -22,4 +23,11 @@ public class RestExceptionHandler {
     public PasswordsDoNotMatchException handle2(PasswordsDoNotMatchException exc) {
         return exc;
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResourceNotFoundException handle3(ResourceNotFoundException exc) {
+        return exc;
+    }
+
 }
