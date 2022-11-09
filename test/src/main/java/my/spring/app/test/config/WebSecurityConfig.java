@@ -19,12 +19,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .cors().and()
             .csrf().disable()
             .authorizeHttpRequests((requests) -> requests
                 .antMatchers("/").permitAll()
                 .antMatchers("/protected/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/v1/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/v1/**").authenticated())
+                .antMatchers(HttpMethod.GET, "/api/v1/**").permitAll())
             .formLogin()
                 .permitAll()
                 .and()

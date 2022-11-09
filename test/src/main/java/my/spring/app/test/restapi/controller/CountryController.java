@@ -3,6 +3,7 @@ package my.spring.app.test.restapi.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import my.spring.app.test.restapi.repositories.CountryRepository;
 
 @RestController
 @RequestMapping(path = "/${v1Api}/country")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CountryController {
 
     @Autowired
