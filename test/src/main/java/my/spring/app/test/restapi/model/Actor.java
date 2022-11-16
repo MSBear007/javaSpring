@@ -20,7 +20,7 @@ import lombok.Setter;
 public class Actor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Getter @Setter
@@ -37,4 +37,7 @@ public class Actor {
     @JoinColumn(name = "country_code")
     @Getter @Setter
     private Country country;
+
+    @Getter @Setter
+    private String thumbnailPath;
 }
