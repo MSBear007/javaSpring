@@ -1,5 +1,7 @@
 package my.spring.app.test.restapi.controller.exception_handling;
 
+import java.io.IOException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +29,12 @@ public class RestExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResourceNotFoundException handle3(ResourceNotFoundException exc) {
+        return exc;
+    }
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public IOException handle4(IOException exc) {
         return exc;
     }
 
