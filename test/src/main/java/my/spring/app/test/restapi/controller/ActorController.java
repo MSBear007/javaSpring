@@ -30,12 +30,12 @@ public class ActorController {
     private ActorService service;
 
     @PostMapping(path = "/add")
-    public Actor postActor(@ModelAttribute("actor") ActorDto actorDto) throws ResourceNotFoundException, IOException {
+    public Actor postActor(@ModelAttribute("actor") ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
         return service.addActor(actorDto);
     }
 
     @PutMapping(path="/update")
-    public Actor updateActor(@ModelAttribute("actor") ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
+    public Actor updateActor(@ModelAttribute("actor") ActorDto actorDto) throws ResourceNotFoundException, IOException {
         return service.updateActor(actorDto);
     }
 

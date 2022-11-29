@@ -8,10 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.extern.slf4j.Slf4j;
 import my.spring.app.test.restapi.model.User;
 
-@Slf4j
 public class MyUserDetails implements UserDetails {
 
     private User user;
@@ -36,7 +34,6 @@ public class MyUserDetails implements UserDetails {
             .stream()
             .map(role -> new SimpleGrantedAuthority(role.getName()))
             .collect(Collectors.toList());
-        log.info(authorities.toString());
             return authorities;
     }
 

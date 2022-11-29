@@ -35,7 +35,9 @@ public class ActorService {
     private CountryRepository countryRepository;
 
 
-    public Actor addActor(ActorDto actorDto) throws ResourceNotFoundException, IOException {
+    public Actor addActor(ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
+        if (!actorRepository.findByName(actorDto.getName()).isPresent()) 
+            throw new ResourceAlreadyExistsException("actor already exists in database");
         return actorRepository.save(newActor(actorDto));
     }
 
@@ -45,9 +47,8 @@ public class ActorService {
     }
 
 
-    public Actor updateActor(ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
-        if (!actorRepository.findByName(actorDto.getName()).isPresent()) 
-            throw new ResourceAlreadyExistsException("actor already exists in database");
+    public Actor updateActor(ActorDto actorDto) throws ResourceNotFoundException, IOException {
+        
         return actorRepository.save(newActor(actorDto));
     }
 
