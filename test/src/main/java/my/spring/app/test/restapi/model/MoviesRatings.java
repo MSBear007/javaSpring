@@ -33,8 +33,6 @@ public class MoviesRatings {
     @Getter @Setter
     private User user;
 
-
-    // TODO: validation 1 -- 10
     @Getter @Setter
     private int stars;
 

@@ -6,12 +6,14 @@ import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
+import my.spring.app.test.validation.MovieYear;
 
 @Data
 public class MovieDto {
     @NotBlank @NotNull
     private String title;
 
+    @MovieYear(oldestPossible = 1888)
     private int year;
     
     private MultipartFile poster;

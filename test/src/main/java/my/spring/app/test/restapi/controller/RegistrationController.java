@@ -1,7 +1,11 @@
 package my.spring.app.test.restapi.controller;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +25,8 @@ public class RegistrationController {
     private RegistrationService service; 
 
     @PostMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User register(@ModelAttribute("user")UserDto userDto) throws PasswordsDoNotMatchException, UserAlreadyExistsException {
+    public User register(@Valid @ModelAttribute("user")UserDto userDto, BindingResult result) throws PasswordsDoNotMatchException, UserAlreadyExistsException {
+        if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.registerNewAccount(userDto);
     }
 }

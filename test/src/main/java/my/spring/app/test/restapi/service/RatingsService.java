@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import my.spring.app.test.dto.RatingDto;
 import my.spring.app.test.exceptions.ResourceNotFoundException;
 import my.spring.app.test.restapi.model.Movie;
 import my.spring.app.test.restapi.model.MoviesRatings;
@@ -27,23 +28,23 @@ public class RatingsService {
     @Autowired
     private MovieRepository moviesRepo;
 
-    public boolean addRating(long movie_id, int rating) throws ResourceNotFoundException {
+    public boolean addRating(RatingDto rating) throws ResourceNotFoundException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         MyUserDetails userDetails = (MyUserDetails)auth.getPrincipal();
         String username = userDetails.getUsername();
         Optional<User> user = userRepo.findByUsername(username);
         if (user.isEmpty()) throw new ResourceNotFoundException("wtf how did you hack my app you freaking lunatic???");
-        Optional<Movie> movie =  moviesRepo.findById(movie_id);
-        if (movie.isEmpty()) throw new ResourceNotFoundException("movie with id " + movie_id + " not found");
+        Optional<Movie> movie =  moviesRepo.findById(rating.getMovieId());
+        if (movie.isEmpty()) throw new ResourceNotFoundException("movie with id " + rating.getMovieId() + " not found");
         List<MoviesRatings> existing = ratingsRepo.findByMovieAndUser(movie.get(), user.get());
         if (existing.size() == 0) {
             MoviesRatings newRating = new MoviesRatings();
             newRating.setMovie(movie.get());
             newRating.setUser(user.get());
-            newRating.setStars(rating);
+            newRating.setStars(rating.getRating());
             ratingsRepo.save(newRating);
         } else {
-            existing.get(0).setStars(rating);
+            existing.get(0).setStars(rating.getRating());
             ratingsRepo.save(existing.get(0));
         }
         return true;

@@ -28,7 +28,7 @@ public class Movie {
     @Getter @Setter
     private String title;
 
-    // TODO: year validator >= 1880
+    
     @Getter @Setter
     private int year;
 

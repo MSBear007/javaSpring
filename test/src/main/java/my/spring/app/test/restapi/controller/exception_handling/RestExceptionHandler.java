@@ -2,6 +2,8 @@ package my.spring.app.test.restapi.controller.exception_handling;
 
 import java.io.IOException;
 
+import javax.validation.ValidationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,4 +40,11 @@ public class RestExceptionHandler {
         return exc;
     }
 
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationException handle5(ValidationException exc) {
+        return exc;
+    }
+
+    
 }

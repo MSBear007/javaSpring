@@ -2,9 +2,13 @@ package my.spring.app.test.restapi.controller;
 
 import java.io.IOException;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
 // import org.apache.logging.log4j.LogManager;
 // import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,12 +34,14 @@ public class ActorController {
     private ActorService service;
 
     @PostMapping(path = "/add")
-    public Actor postActor(@ModelAttribute("actor") ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
+    public Actor postActor(@Valid @ModelAttribute("actor") ActorDto actorDto, BindingResult result) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
+        if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.addActor(actorDto);
     }
 
     @PutMapping(path="/update")
-    public Actor updateActor(@ModelAttribute("actor") ActorDto actorDto) throws ResourceNotFoundException, IOException {
+    public Actor updateActor(@Valid @ModelAttribute("actor") ActorDto actorDto, BindingResult result) throws ResourceNotFoundException, IOException {
+        if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.updateActor(actorDto);
     }
 

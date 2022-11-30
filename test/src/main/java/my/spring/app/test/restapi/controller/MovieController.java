@@ -2,7 +2,11 @@ package my.spring.app.test.restapi.controller;
 
 import java.io.IOException;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +34,8 @@ public class MovieController {
     }
 
     @PostMapping(path="/add")
-    public Movie postMovie(@ModelAttribute("movie") MovieDto movieDto) throws IOException {
+    public Movie postMovie(@Valid @ModelAttribute("movie") MovieDto movieDto, BindingResult result) throws IOException {
+        if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.addMovie(movieDto);
     }
 }
