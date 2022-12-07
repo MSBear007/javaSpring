@@ -16,4 +16,10 @@ public interface MoviesRatingsRepository extends CrudRepository<MoviesRatings, L
         WHERE record.movie = ?1 AND record.user = ?2
     """)
     List<MoviesRatings> findByMovieAndUser(Movie movie, User user);
+
+    @Query(value = """
+        SELECT COUNT(record) FROM MoviesRatings record
+        WHERE record.movie = ?1
+    """)
+    long countByMovie(Movie movie);
 }

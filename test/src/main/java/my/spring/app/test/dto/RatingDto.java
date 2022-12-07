@@ -1,6 +1,5 @@
 package my.spring.app.test.dto;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -12,6 +11,6 @@ public class RatingDto {
     @Rating1To10
     private int rating;
 
-    @NotNull @NotBlank
+    @NotNull
     private long movieId;
 }

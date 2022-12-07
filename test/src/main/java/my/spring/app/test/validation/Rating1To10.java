@@ -12,7 +12,7 @@ import javax.validation.Payload;
 @Documented
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = MovieYearValidator.class)
+@Constraint(validatedBy = RatingConstraintValidator.class)
 public @interface Rating1To10 {
     String message() default "Invalid rating: must be from 1 to 10";
     Class<?>[] groups() default {};

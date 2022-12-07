@@ -28,7 +28,6 @@ public class MovieService {
 
     private final String pathToPosters = "C:\\Users\\bluff\\Desktop\\javaSpring\\test\\static\\img\\movies-posters\\";
 
-
     private Movie newMovie(MovieDto dto) throws IOException {
         Movie movie = new Movie();
         movie.setTitle(dto.getTitle());
@@ -68,7 +67,7 @@ public class MovieService {
 
         if (res.isPresent()) {
             List<MoviesRatings> ratings = res.get().getRatings();
-            // very slow and unoptimшzed, but i don't care
+            // very slow and unoptimized, but i don't care
             double average = ratings.stream().mapToDouble(rating -> {
                 return (double)(rating.getStars());
             }).average().getAsDouble();

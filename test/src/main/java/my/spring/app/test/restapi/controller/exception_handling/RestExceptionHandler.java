@@ -54,7 +54,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ExceptionWrapper> handle5(ValidationException exc) {
-        return new ResponseEntity<ExceptionWrapper>(new ExceptionWrapper(exc.getMessage(), null), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ExceptionWrapper>(new ExceptionWrapper(exc.getMessage(), stackTraceString(exc)), HttpStatus.BAD_REQUEST);
     }
 
     

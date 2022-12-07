@@ -13,8 +13,9 @@ public class MovieDto {
     @NotBlank @NotNull
     private String title;
 
-    @MovieYear(oldestPossible = 1888)
-    private int year;
+    @MovieYear(oldestPossible = 1888, message = "year must be >= 1888")
+    private Integer year;
     
+    @NotNull
     private MultipartFile poster;
 }
