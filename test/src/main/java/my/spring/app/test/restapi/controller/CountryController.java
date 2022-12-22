@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ public class CountryController {
     @Autowired
     private CountryRepository countryRepository;
 
-    @PostMapping(path = "/new")
+    @PostMapping(path = "/")
     public @ResponseBody String postCountry(@RequestParam(value = "name", required = true)String name, 
         @RequestParam(value = "code", required = true)String code) {
         Country country = new Country(name, code);
@@ -30,13 +31,13 @@ public class CountryController {
         return "Success.";
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/")
     public @ResponseBody Iterable<Country> getAll(@RequestParam(value = "code", defaultValue = "007")String code) {
         return countryRepository.findAll();
     }
 
-    @GetMapping(path="/")
-    public @ResponseBody Optional<Country> getOne(@RequestParam(value="name")String name) {
+    @GetMapping(path="/{name}")
+    public @ResponseBody Optional<Country> getOne(@PathVariable String name) {
         return countryRepository.findByName(name);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import my.spring.app.test.exceptions.PasswordsDoNotMatchException;
+import my.spring.app.test.exceptions.ResourceAlreadyExistsException;
 import my.spring.app.test.exceptions.ResourceNotFoundException;
 import my.spring.app.test.exceptions.UserAlreadyExistsException;
 import my.spring.app.test.exceptions.wrapper.ExceptionWrapper;
@@ -57,5 +58,16 @@ public class RestExceptionHandler {
         return new ResponseEntity<ExceptionWrapper>(new ExceptionWrapper(exc.getMessage(), stackTraceString(exc)), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionWrapper> handle6(ResourceAlreadyExistsException exc) {
+        return new ResponseEntity<ExceptionWrapper>(new ExceptionWrapper(exc.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionWrapper> handle7(NullPointerException exc) {
+        return new ResponseEntity<ExceptionWrapper>(new ExceptionWrapper(exc.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     
 }

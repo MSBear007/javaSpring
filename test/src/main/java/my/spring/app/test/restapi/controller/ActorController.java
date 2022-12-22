@@ -33,24 +33,24 @@ public class ActorController {
     @Autowired
     private ActorService service;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/")
     public Actor postActor(@Valid @ModelAttribute("actor") ActorDto actorDto, BindingResult result) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
         if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.addActor(actorDto);
     }
 
-    @PutMapping(path="/update")
+    @PutMapping(path="/")
     public Actor updateActor(@Valid @ModelAttribute("actor") ActorDto actorDto, BindingResult result) throws ResourceNotFoundException, IOException {
         if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.updateActor(actorDto);
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path="/")
     public @ResponseBody Iterable<Actor> getAllActors() {
         return service.getAllActors();
     }
 
-    @GetMapping(path="/id/{id}")
+    @GetMapping(path="/{id}")
     public @ResponseBody GetActorDto getActorByName(@PathVariable long id) throws ResourceNotFoundException, IOException {
 
         GetActorDto dto = service.getActorWithThumbnail(id);

@@ -28,12 +28,12 @@ public class MovieController {
     @Autowired
     private MovieService service;
 
-    @GetMapping(path="/id/{id}")
+    @GetMapping(path="/{id}")
     public @ResponseBody GetMovieDto getMovieById(@PathVariable long id) throws ResourceNotFoundException, IOException {
         return service.getMovieById(id);
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/")
     public Movie postMovie(@Valid @ModelAttribute("movie") MovieDto movieDto, BindingResult result) throws IOException {
         if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.addMovie(movieDto);

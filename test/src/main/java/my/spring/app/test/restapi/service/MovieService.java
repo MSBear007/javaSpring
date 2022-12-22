@@ -27,7 +27,7 @@ public class MovieService {
 
     private final String pathToPosters = "C:\\Users\\bluff\\Desktop\\javaSpring\\test\\static\\img\\movies-posters\\";
 
-    private Movie newMovie(MovieDto dto) throws IOException {
+    private Movie newMovie(MovieDto dto) throws IOException, NullPointerException {
         Movie movie = new Movie();
         movie.setTitle(dto.getTitle());
         movie.setYear(dto.getYear());
@@ -67,6 +67,7 @@ public class MovieService {
         if (res.isPresent()) {
             List<MoviesRatings> ratings = res.get().getRatings();
             // very slow and unoptimized, but i don't care
+            // nope, actually i care, TODO trigger in DB
             double average = ratings.stream().mapToDouble(rating -> {
                 return (double)(rating.getStars());
             }).average().getAsDouble();

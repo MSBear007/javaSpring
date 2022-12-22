@@ -35,8 +35,9 @@ public class ActorService {
 
 
     public Actor addActor(ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
-        if (!actorRepository.findByName(actorDto.getName()).isPresent()) 
+        if (actorRepository.findByName(actorDto.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException("actor already exists in database");
+        }
         return actorRepository.save(newActor(actorDto));
     }
 

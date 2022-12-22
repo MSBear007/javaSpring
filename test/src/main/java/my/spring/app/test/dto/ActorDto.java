@@ -12,12 +12,16 @@ public class ActorDto {
     @NotBlank @NotNull
     private String name;
 
+    @NotBlank @NotNull
     private String birthDate;
 
+    @NotBlank @NotNull
     private String country;
 
+    @NotBlank @NotNull
     private String sex;
 
+    @NotNull
     private MultipartFile thumbnail;
 
 }
