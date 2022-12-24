@@ -43,7 +43,8 @@ public class ActorService {
 
 
     public Iterable<Actor> getAllActors() {
-        return actorRepository.findAll();
+        Iterable<Actor> actors = actorRepository.findAll();
+        return actors;
     }
 
 
