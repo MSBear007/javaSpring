@@ -2,20 +2,25 @@ package my.spring.app.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import my.spring.app.test.dto.ActorDto;
 import my.spring.app.test.restapi.controller.ActorController;
 import my.spring.app.test.restapi.model.Actor;
 import my.spring.app.test.restapi.model.Country;
@@ -40,13 +45,13 @@ public class ActorControllerTests {
     ActorService service;
 
     Actor RECORD_1 = new Actor(1, "George", 
-        new java.sql.Date(85765876), "Male", new Country("Finalnd", "01"), "thumb.jpg");
+        new java.sql.Date(85765876), "Male", new Country("Finland", "01"), "thumb.jpg");
     Actor RECORD_2 = new Actor(2, "Michael", 
-        new java.sql.Date(85765876), "Male", new Country("Finalnd", "01"), "thumb.jpg");
+        new java.sql.Date(85765876), "Male", new Country("Finland", "01"), "thumb.jpg");
     Actor RECORD_3 = new Actor(3, "Lula", 
-        new java.sql.Date(85765876), "Male", new Country("Finalnd", "01"), "thumb.jpg");
+        new java.sql.Date(85765876), "Male", new Country("Finland", "01"), "thumb.jpg");
     Actor RECORD_4 = new Actor(4, "Jane", 
-        new java.sql.Date(85765876), "Male", new Country("Finalnd", "01"), "thumb.jpg");
+        new java.sql.Date(85765876), "Male", new Country("Finland", "01"), "thumb.jpg");
 
     @WithMockUser
     @Test
@@ -60,5 +65,32 @@ public class ActorControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(4)))
             .andExpect(jsonPath("$[0].name", is("George")));
+    }
+
+    @WithMockUser
+    @Test
+    public void postTest() throws Exception {
+        
+        Mockito.when(service.addActor(Mockito.any(ActorDto.class))).thenReturn(RECORD_1);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/v1/actor/")
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .param("name", "George")
+            .param("birthDate", "1999-11-11")
+            .param("sex", "Male")
+            .param("country", "Finland")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("George")));
+        
+    }
+
+    static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

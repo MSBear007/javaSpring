@@ -71,7 +71,8 @@ public class ActorService {
             actor.setCountry(countryRepository.findByName(actorDto.getCountry()).get());
         }
         MultipartFile thumbnail = actorDto.getThumbnail();
-        if (!thumbnail.isEmpty()) {
+
+        if (thumbnail != null && !thumbnail.isEmpty()) {
             byte[] bytes = thumbnail.getBytes();
             Path path = Paths.get(pathToThumbnails + thumbnail.getOriginalFilename());
             Files.write(path, bytes);

@@ -21,7 +21,6 @@ public class ActorDto {
     @NotBlank @NotNull
     private String sex;
 
-    @NotNull
     private MultipartFile thumbnail;
 
 }
