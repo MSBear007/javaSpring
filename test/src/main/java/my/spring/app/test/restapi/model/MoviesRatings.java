@@ -13,6 +13,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Ratings that users give to movies
+ * @see {@link my.spring.app.test.restapi.model.Movie}
+ * @see {@link my.spring.app.test.restapi.model.User} 
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "movies_ratings", schema = "public")

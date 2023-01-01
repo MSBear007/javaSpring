@@ -16,6 +16,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Movie model
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

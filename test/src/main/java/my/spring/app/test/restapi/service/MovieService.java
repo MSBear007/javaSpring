@@ -41,10 +41,24 @@ public class MovieService {
         return movie;
     }
 
+    /**
+     * POST method service
+     * @param dto
+     * @return
+     * @see {@link my.spring.app.test.restapi.model.Movie}
+     * @see {@link my.spring.app.test.dto.MovieDto}
+     */
     public Movie addMovie(MovieDto dto) throws IOException {
         return movieRepository.save(newMovie(dto));
     }
 
+    /**
+     * GET movie by id service
+     * @param id
+     * @return
+     * @see {@link my.spring.app.test.restapi.model.Movie}
+     * @see {@link my.spring.app.test.dto.GetMovieDto}
+     */
     public GetMovieDto getMovieById(long id) throws ResourceNotFoundException, IOException {
         Optional<Movie> res = movieRepository.findById(id);
 
@@ -61,6 +75,7 @@ public class MovieService {
 
     }
 
+    // TODO update rating by DB trigger
     public void updateRating(long id) throws ResourceNotFoundException {
         Optional<Movie> res = movieRepository.findById(id);
 

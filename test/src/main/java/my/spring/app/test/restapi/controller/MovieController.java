@@ -28,11 +28,24 @@ public class MovieController {
     @Autowired
     private MovieService service;
 
+    /**
+     * GET movie by id
+     * @param id
+     * @return 
+     * @see {@link my.spring.app.test.dto.GetMovieDto}
+     */
     @GetMapping(path="/{id}")
     public @ResponseBody GetMovieDto getMovieById(@PathVariable long id) throws ResourceNotFoundException, IOException {
         return service.getMovieById(id);
     }
 
+    /**
+     * POST movie
+     * @param movieDto
+     * @param result
+     * @return 
+     * @see {@link my.spring.app.test.restapi.model.Movie}
+     */
     @PostMapping(path="/")
     public Movie postMovie(@Valid @ModelAttribute("movie") MovieDto movieDto, BindingResult result) throws IOException {
         if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());

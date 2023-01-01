@@ -33,23 +33,44 @@ public class ActorController {
     @Autowired
     private ActorService service;
 
+    /**
+     * POST method
+     * @param actorDto - Actor Data Transfer Object
+     * @see {@link my.spring.app.test.dto.ActorDto}
+     * @param result - validation results
+     */
     @PostMapping(path = "/")
     public Actor postActor(@Valid @ModelAttribute("actor") ActorDto actorDto, BindingResult result) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
         if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.addActor(actorDto);
     }
 
+    /**
+     * PUT method
+     * @param actorDto Actor Data Transfer Object
+     * @see {@link my.spring.app.test.dto.ActorDto}
+     * @param result - validation results
+     */
     @PutMapping(path="/")
     public Actor updateActor(@Valid @ModelAttribute("actor") ActorDto actorDto, BindingResult result) throws ResourceNotFoundException, IOException {
         if (result.hasErrors()) throw new ValidationException(result.getAllErrors().toString());
         return service.updateActor(actorDto);
     }
 
+    /**
+     * GET method (all actors)
+     */
     @GetMapping(path="/")
     public @ResponseBody Iterable<Actor> getAllActors() {
         return service.getAllActors();
     }
 
+    /**
+     * GET method (by id)
+     * @param id - id of actor
+     * @return GETActor DTO
+     * @see {@link my.spring.app.test.dto.GetActorDto}
+     */
     @GetMapping(path="/{id}")
     public @ResponseBody GetActorDto getActorByName(@PathVariable long id) throws ResourceNotFoundException, IOException {
 

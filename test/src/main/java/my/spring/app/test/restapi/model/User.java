@@ -20,6 +20,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * User model
+ * used both for account details and registration details (currently)
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

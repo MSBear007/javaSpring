@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * User roles model
+ */
 @Entity
 @Table(name = "roles", schema="public")
 public class UserRole {

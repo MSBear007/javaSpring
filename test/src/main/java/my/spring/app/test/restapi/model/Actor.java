@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Actor model
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "actors", schema = "public")
@@ -30,8 +33,11 @@ public class Actor {
     @Getter @Setter
     private java.sql.Date birthDate;
 
+    /**
+     * This is String. Inclusive, but most importantly - lazy.
+     */
     @Getter @Setter
-    private String sex; // inclusive but most importantly - lazy.
+    private String sex; 
 
     @ManyToOne
     @JoinColumn(name = "country_code")

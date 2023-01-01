@@ -7,6 +7,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
+/**
+ * Actor DTO,
+ * String name,
+ * String birthDate,
+ * String Country,
+ * String sex,
+ * MultipartFile thumbnail
+ */
 @Data
 public class ActorDto {
     @NotBlank @NotNull

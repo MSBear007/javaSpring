@@ -23,6 +23,11 @@ public class CountryController {
     @Autowired
     private CountryRepository countryRepository;
 
+    /**
+     * POST method
+     * @param name name of the country as request parameter
+     * @param code code of the country as request parameter
+     */
     @PostMapping(path = "/")
     public @ResponseBody String postCountry(@RequestParam(value = "name", required = true)String name, 
         @RequestParam(value = "code", required = true)String code) {
@@ -31,11 +36,21 @@ public class CountryController {
         return "Success.";
     }
 
+    /**
+     * GET all
+     * @return all countries
+     * @see {@link my.spring.app.test.restapi.model.Country}
+     */
     @GetMapping(path = "/")
-    public @ResponseBody Iterable<Country> getAll(@RequestParam(value = "code", defaultValue = "007")String code) {
+    public @ResponseBody Iterable<Country> getAll() {
         return countryRepository.findAll();
     }
 
+    /**
+     * GET by name
+     * @param name - name of the country as URL path variable
+     * @see {@link my.spring.app.test.restapi.model.Country}
+     */
     @GetMapping(path="/{name}")
     public @ResponseBody Optional<Country> getOne(@PathVariable String name) {
         return countryRepository.findByName(name);

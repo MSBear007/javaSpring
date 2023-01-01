@@ -34,6 +34,13 @@ public class ActorService {
     private CountryRepository countryRepository;
 
 
+    /**
+     * Add actor by given DTO
+     * @param actorDto - Actor DTO
+     * @return saved actor
+     * @see {@link my.spring.app.test.dto.ActorDto}
+     * @see {@link my.spring.app.test.restapi.model.Actor}
+     */
     public Actor addActor(ActorDto actorDto) throws ResourceNotFoundException, IOException, ResourceAlreadyExistsException {
         if (actorRepository.findByName(actorDto.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException("actor already exists in database");
@@ -41,13 +48,24 @@ public class ActorService {
         return actorRepository.save(newActor(actorDto));
     }
 
-
+    /**
+     * 
+     * @return all actors in DB, thumbnails like paths
+     * @see {@link my.spring.app.test.restapi.model.Actor}
+     */
     public Iterable<Actor> getAllActors() {
         Iterable<Actor> actors = actorRepository.findAll();
         return actors;
     }
 
 
+    /**
+     * Updates actor
+     * @param actorDto - Actor DTO
+     * @return saved actor
+     * @see {@link my.spring.app.test.dto.ActorDto}
+     * @see {@link my.spring.app.test.restapi.model.Actor}
+     */
     public Actor updateActor(ActorDto actorDto) throws ResourceNotFoundException, IOException {
         
         return actorRepository.save(newActor(actorDto));
@@ -81,6 +99,13 @@ public class ActorService {
         return actor;
     }
 
+    /**
+     * GET actor by given id, thumbnail like byte[] array
+     * @param id id of actor
+     * @return GetActorDto
+     * @see {@link my.spring.app.test.dto.GetActorDto}
+     * @see {@link my.spring.app.test.restapi.model.Actor}
+     */
     public GetActorDto getActorWithThumbnail(long id) throws ResourceNotFoundException, IOException {
         Optional<Actor> actor = actorRepository.findById(id);
         if (actor.isEmpty()) throw new ResourceNotFoundException();
