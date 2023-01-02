@@ -3,6 +3,7 @@ package my.spring.app.test.restapi.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,6 +44,9 @@ public class Movie {
 
     @Getter @Setter
     private String posterPath;
+
+    @Column(columnDefinition = "BIGINT default 0")
+    private long ratingsCount;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movie_id")

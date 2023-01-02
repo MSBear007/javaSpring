@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import my.spring.app.test.dto.GetMovieDto;
 import my.spring.app.test.dto.MovieDto;
 import my.spring.app.test.exceptions.ResourceNotFoundException;
 import my.spring.app.test.restapi.model.Movie;
-import my.spring.app.test.restapi.model.MoviesRatings;
 import my.spring.app.test.restapi.repositories.MovieRepository;
 
 @Service
@@ -74,21 +72,4 @@ public class MovieService {
         else throw new ResourceNotFoundException("no movie with id " + id);
 
     }
-
-    // TODO update rating by DB trigger
-    public void updateRating(long id) throws ResourceNotFoundException {
-        Optional<Movie> res = movieRepository.findById(id);
-
-        if (res.isPresent()) {
-            List<MoviesRatings> ratings = res.get().getRatings();
-            // very slow and unoptimized, but i don't care
-            // nope, actually i care, TODO trigger in DB
-            double average = ratings.stream().mapToDouble(rating -> {
-                return (double)(rating.getStars());
-            }).average().getAsDouble();
-            res.get().setRating(average);
-            movieRepository.save(res.get());
-        }
-        else throw new ResourceNotFoundException("no movie with id " + id);
-    } 
 }
