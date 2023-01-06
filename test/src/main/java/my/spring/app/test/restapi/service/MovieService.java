@@ -1,7 +1,6 @@
 package my.spring.app.test.restapi.service;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -23,6 +22,9 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private MultipartDataService multipartDataService;
+
     private final String pathToPosters = "C:\\Users\\bluff\\Desktop\\javaSpring\\test\\static\\img\\movies-posters\\";
 
     private Movie newMovie(MovieDto dto) throws IOException, NullPointerException {
@@ -30,12 +32,9 @@ public class MovieService {
         movie.setTitle(dto.getTitle());
         movie.setYear(dto.getYear());
         MultipartFile poster = dto.getPoster();
-        if (!poster.isEmpty()) {
-            byte[] bytes = poster.getBytes();
-            Path path = Paths.get(pathToPosters + poster.getOriginalFilename());
-            Files.write(path, bytes);
-            movie.setPosterPath(poster.getOriginalFilename());
-        }
+        Path path = Paths.get(pathToPosters + poster.getOriginalFilename());
+        multipartDataService.uploadFile(poster, path);
+        movie.setPosterPath(poster.getOriginalFilename());
         return movie;
     }
 
@@ -65,7 +64,7 @@ public class MovieService {
             dto.setRating(res.get().getRating());
             dto.setTitle(res.get().getTitle());
             dto.setYear(res.get().getYear());
-            byte[] content = Files.readAllBytes(Paths.get(pathToPosters + res.get().getPosterPath()));
+            byte[] content = multipartDataService.downloadFile(Paths.get(pathToPosters + res.get().getPosterPath()));
             dto.setPoster(content);
             return dto;
         }

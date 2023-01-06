@@ -1,14 +1,13 @@
 package my.spring.app.test.restapi.service;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 // import org.apache.logging.log4j.LogManager;
@@ -32,6 +31,9 @@ public class ActorService {
 
     @Autowired
     private CountryRepository countryRepository;
+
+    @Autowired
+    private MultipartDataService multipartDataService;
 
 
     /**
@@ -89,13 +91,9 @@ public class ActorService {
             actor.setCountry(countryRepository.findByName(actorDto.getCountry()).get());
         }
         MultipartFile thumbnail = actorDto.getThumbnail();
-
-        if (thumbnail != null && !thumbnail.isEmpty()) {
-            byte[] bytes = thumbnail.getBytes();
-            Path path = Paths.get(pathToThumbnails + thumbnail.getOriginalFilename());
-            Files.write(path, bytes);
-            actor.setThumbnailPath(thumbnail.getOriginalFilename());
-        }
+        Path path = Paths.get(pathToThumbnails + thumbnail.getOriginalFilename());
+        multipartDataService.uploadFile(thumbnail, path);
+        actor.setThumbnailPath(thumbnail.getOriginalFilename());
         return actor;
     }
 
@@ -114,7 +112,7 @@ public class ActorService {
         actorDto.setCountry(actor.get().getCountry().getName());
         actorDto.setBirthDate(actor.get().getBirthDate().toString());
         actorDto.setSex(actor.get().getSex());
-        byte[] content = Files.readAllBytes(Paths.get(pathToThumbnails + actor.get().getThumbnailPath()));
+        byte[] content = multipartDataService.downloadFile(Paths.get(pathToThumbnails + actor.get().getThumbnailPath()));
         actorDto.setThumbnail(content);
         return actorDto;
     }
